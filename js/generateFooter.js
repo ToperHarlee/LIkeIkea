@@ -1,18 +1,31 @@
 'use strict';
+import {getData} from "./getData.js";
 
  const generateFooter = () => {
-    const footerHTML = `
+
+    let arr;
+    getData.catalog((data) => {
+        //console.log(data);
+        //arr = data; // получаем данные в виде массива со строками(то что получили из reduce значения категорий)
+
+        let catalogList = '';//  в эту пустую строку будем записывать в каждую итерацию цикла одну из li
+
+        data.forEach(item => {
+            catalogList += `
+            <li class="footer-list">
+                <a href="goods.html?cat=${item}">${item}</a>
+            </li>
+            `;
+        });
+
+        const footerHTML = `
     <footer>
     <div class="container">
         <div class="footer">
             <div class="footer-catalog">
                 <h2 class="footer-header">Каталог</h2>
                 <ul>
-                    <li class="footer-list"><a href="goods.html?cat=Мебель">Мебель</a></li>
-                    <li class="footer-list"><a href="goods.html?cat=Кухня">Кухня</a></li>
-                    <li class="footer-list"><a href="goods.html?cat=Текстиль">Текстиль</a></li>
-                    <li class="footer-list"><a href="goods.html?cat=Освещение">Освещение</a></li>
-                    <li class="footer-list"><a href="goods.html?cat=Декор">Декор</a></li>
+                    ${catalogList}
                 </ul>
             </div>
             <div class="footer-about">
@@ -39,8 +52,11 @@
         </div>
     </div>
 
-</footer>
+    </footer>
     `;
-    document.body.insertAdjacentHTML('beforeend', footerHTML);
+        document.body.insertAdjacentHTML('beforeend', footerHTML);
+    });
+
+
 };
 export default generateFooter;

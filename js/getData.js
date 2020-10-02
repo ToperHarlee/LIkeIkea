@@ -2,7 +2,7 @@
 const PARAM = {
     cat: 'category',
     subcat: 'subcategory',
-    search: ['name', 'description', 'category', 'subcategory']
+    search: ['name', 'description', 'category', 'subcategory', "img"]
 };
 
 
@@ -10,7 +10,7 @@ const PARAM = {
 export const getData = {
     url: 'database/dataBase.json',
     get(process){
-        console.log(this);
+        //console.log(this);
         fetch(this.url)
             .then((response) => response.json())//декодирует ответ в формате JSON,https://learn.javascript.ru/fetch
             .then((process));
@@ -50,11 +50,13 @@ export const getData = {
                         item[prop].toLowerCase().includes(value.toLowerCase())){
                         return true;
                     }
+                    //если значение введенное в поиске не совпадает с значением в data то создать элемент с сообщением ничего не найдено и добавлять куда хочешь
                 }
             });
             callback(result);
         })
     },
+    //получить все значения каталога в виде массива со списком всех категорий
     catalog(callback){
         this.get((data) => {
             const result = data.reduce((arr, item) => {
@@ -66,11 +68,12 @@ export const getData = {
             callback(result);
         });
     },
+    //получить все значения субкаталога в виде массива со списком всех подкатегорий
     subCatalog(value, callback){
         this.get((data) => {
             const result = data.filter(item => item.category === value)
                 .reduce((arr, item) => {
-                    if(!arr.includes(item.subcategory)){
+                    if(!arr.includes(item.subcategory) && item.category === value){
                         arr.push(item.subcategory);
                     }
                     return arr;
@@ -83,7 +86,15 @@ export const getData = {
 
 
 
+/*const arr = [1, 2, 3];
 
+const res = arr.reduce((acc, item) => {
+    const a = item + 1;
+    acc.push(a);
+    return acc;
+}, []);
+
+console.log(res);*/
 
 
 
