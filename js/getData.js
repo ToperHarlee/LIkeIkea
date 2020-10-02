@@ -46,8 +46,7 @@ export const getData = {
         this.get((data) => {
             const result =  data.filter(item => {
                 for (const prop in item){
-                    if (PARAM.search.includes(prop) &&
-                        item[prop].toLowerCase().includes(value.toLowerCase())){
+                    if (PARAM.search.includes(prop) && item[prop.toLowerCase()].includes(value.toLowerCase())){
                         return true;
                     }
                     //если значение введенное в поиске не совпадает с значением в data то создать элемент с сообщением ничего не найдено и добавлять куда хочешь

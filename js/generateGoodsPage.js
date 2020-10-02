@@ -1,5 +1,6 @@
 import {getData} from "./getData.js";//?
 //страница для генерации товаров
+const COUNTER = 6;
 
 const wishList = ['idd005', 'idd065', 'idd085', 'idd035'];
 
@@ -16,33 +17,36 @@ const generateGoodsPage = () => {
 
     const generateCards = (data) => {
         goodsList.textContent = '';// удаление поля карточек(кстати я бы раньше удалял содержимое через классы, а тут способ гибче)
+        if (!data.length){
+            const goods = document.querySelector('.goods');
+            goods.textContent = location.search === '?wishlist' ?
+                'Список желаний пуст' : 'По вашему запросу ничего не найдено';
+        }
         data.forEach(item => {
+            console.log(item);//посмотреть свойства обьекта
+            const { name: itemName, count, description, id, img: image, price } = item;
             goodsList.insertAdjacentHTML('afterbegin', `
                <li class="goods-list__item">
-                    <a class="goods-item__link" href="${item.id}">
+                    <a class="goods-item__link" href="${id}">
                     <article class="goods-item">
                     <div class="goods-item__img">
-                    <img src="${item.img[0]}"
-                data-second-image="${item.img[1]}" alt="${item.name}">
+                    <img src="${image[0]}"
+                ${image[1] ? `data-second-image=${image[1]}` : ''}>
                     </div>
-                    <p class="goods-item__new">Новинка</p>
-                    <h3 class="goods-item__header">${item.name}</h3>
-                <p class="goods-item__description">${item.description}</p>
+                    ${count > COUNTER ? '<p class="goods-item__new">Новинка</p>' : ''}
+                    ${!count  ? '<p class="goods-item__new">Нет в наличии</p>' : ''}
+                    <h3 class="goods-item__header">${itemName}</h3>
+                <p class="goods-item__description">${description}</p>
                 <p class="goods-item__price">
-                    <span class="goods-item__price-value">${item.price}</span>
+                    <span class="goods-item__price-value">${price}</span>
                     <span class="goods-item__currency"> ₽</span>
                 </p>
-                <button class="btn btn-add-card" aria-label="Добравить в корзину" data-idd="${item.id}"></button>
+                ${count  ? ' <button class="btn btn-add-card" aria-label="Добравить в корзину" data-idd="${id}"></button>' : ''}   
                     </article>
                     </a>
                 </li>
             `);
         })
-        if (document.querySelector('.search-input').value !== data.value || getData.search.value !== data.values){
-            goodsList.textContent = `
-            <li>По вашему запросу ничего не найдено</li>
-            `;
-        }
     };
 
     if(location.pathname.includes('goods') && location.search){

@@ -364,7 +364,7 @@ footer {
 
 .subcatalog.subopen {
 	left: 20rem;
-	display: block;
+	/*display: block;*/
 }
 
 .overlay {
