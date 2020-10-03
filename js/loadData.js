@@ -2,7 +2,7 @@ import { getData } from "./getData.js";
 
 // const wishList = ['idd005', 'idd065', 'idd085', 'idd035'];
 
-const cartList = [
+/*const cartList = [
     {
         id: 'idd015',
         count: 3
@@ -15,7 +15,7 @@ const cartList = [
         id: 'idd095',
         count: 2
     },
-];
+];*/
 
 export const loadData = () => {
 
@@ -42,9 +42,9 @@ export const loadData = () => {
 
 
     if (location.pathname.includes('cart')){
-        getData.cart(cartList, (data) => console.log(data));
+        getData.cart(cartList, (data) => console.log(data));//карт лист переделать тк обьект перенесен
     }
-
+    // написать корзину
     //getData.catalog((data) => console.log(data));
     //getData.subCatalog('Декор', (data) => console.log(data));
 
