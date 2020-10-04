@@ -1,4 +1,5 @@
 import { getData } from "./getData.js";
+import userData from "./userData.js";
 
 // const wishList = ['idd005', 'idd065', 'idd085', 'idd035'];
 
@@ -41,9 +42,9 @@ export const loadData = () => {
 
 
 
-    if (location.pathname.includes('cart')){
+    /*if (location.pathname.includes('cart')){
         getData.cart(cartList, (data) => console.log(data));//карт лист переделать тк обьект перенесен
-    }
+    }*/
     // написать корзину
     //getData.catalog((data) => console.log(data));
     //getData.subCatalog('Декор', (data) => console.log(data));
