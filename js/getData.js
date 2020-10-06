@@ -9,13 +9,27 @@ const PARAM = {
 
 export const getData = {
     url: 'database/dataBase.json',
+
+    async getData (url){
+
+        const response = await fetch(url);
+
+        if (!response.ok){
+            throw new Error(`Ошибка по адресу ${url}, статус ошибки ${response.status}`);
+        }
+
+        return await response.json();
+    },
+
     get(process){
         //console.log(this);
-        fetch(this.url)
-            .then((response) => response.json())//декодирует ответ в формате JSON,https://learn.javascript.ru/fetch
-            .then((process));
+        this.getData(this.url)
+            //.then((response) => response.json())//декодирует ответ в формате JSON,https://learn.javascript.ru/fetch
+            .then((process))
+            .catch((err) => console.error(err));
         //без resolve просто цепочка выполнения
     },
+
     wishlist(list, callback){
         this.get((data) => {
             const result = data.filter((item) => list.includes(item.id));//эти данные фильтруем на основе тех данных которые получены из loadData(список wishlist и функцию которая выводит данные в консоль/на страницу)
